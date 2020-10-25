@@ -344,6 +344,7 @@ export default class LiveChat extends Component {
 		})
 		customerSDK.on('availability_updated', (data) => {
 			const { availability } = data
+			// TODO - when status is updated to offline - inform the user
 			this.setState({
 				onlineStatus: availability === 'online',
 			})
@@ -424,7 +425,9 @@ export default class LiveChat extends Component {
 			})
 		})
 
-		customerSDK.on('incoming_chat', () => {
+		customerSDK.on('incoming_chat', (props) => {
+			// TODO - incoming chat is triggered but agents are offline - inform the user
+			console.log(props);
 			this.setState({
 				chatActive: true,
 			})
@@ -499,7 +502,6 @@ export default class LiveChat extends Component {
 					onlineStatus={this.state.onlineStatus}
 					connectionState={this.state.connectionState}
 					onInputChange={this.handleInputChange}
-					disableComposer={this.shouldDisableComposer()}
 					headerText={this.getHeaderText()}
 				/>
 			),
