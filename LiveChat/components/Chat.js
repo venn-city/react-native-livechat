@@ -8,6 +8,10 @@ export default class Chat extends React.Component {
 		this.props.handleSendMessage(message.text)
 	}
 
+	scrollToBottom = () => {
+		this.ref && this.ref.scrollToBottom();
+	}
+
 	render() {
 		const {
 			messages,
@@ -18,12 +22,16 @@ export default class Chat extends React.Component {
 			onQuickReply,
 			chatTitle,
 			closeChat,
+
 			...restProps
 		} = this.props
 		if (isChatOn) {
 			return (
 				<GiftedChat
-					inverted={false}
+					// inverted={false}
+					ref={(ref) => {
+						this.props.chatRef = ref;
+					}}
 					messages={messages}
 					onSend={this.handleSend}
 					onInputTextChanged={onInputChange}
